@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Screen Loader</title>
+<style>
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden; /* Screen-er baire horizontal scroll bondho kora holo */
+  background-color: #FFFFFF; /* Pichone ekta kalo background dewa holo jate chobi-ta bhalo lage */
+}
+
+/* Content Area */
+.content {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 'cover' er bodole 'contain' bebohar kora holo jate chobi kete na jay ba zoom na hoy */
+}
+
+/* Loader Settings */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.loader:not(.open) {
+  pointer-events: all;
+}
+
+.left, .right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 2s ease-in-out;
+}
+
+/* Tomar images er path gulo ekhane thakbe */
+.left {
+  left: 0;
+  background-image: url('left.png'); 
+}
+
+.right {
+  right: 0;
+  background-image: url('right.png'); 
+}
+
+/* Animation */
+.open .left {
+  transform: translateX(-100%);
+}
+
+.open .right {
+  transform: translateX(100%);
+}
+
+/* Animation shesh hobar por element physically hide korar jonno */
+.loader.open {
+  visibility: hidden;
+  transition: visibility 0s 2s;
+}
+</style>
+</head>
+<body>
+
+<div class="content">
+  <img src="myphoto.png" alt="My Background">
+</div>
+
+<div class="loader" id="loader">
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+
+<script>
+// Page completely load hobar por script kaj korbe
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById("loader").classList.add("open");
+  }, 2000); // 2 second por split animation start hobe
+});
+</script>
+
+</body>
+</html>
